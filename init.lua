@@ -5,14 +5,15 @@ local IsStudio = RS:IsStudio()
 local Url = "https://github.com/veilithrift/vns/raw/main/main.rbxm"
 
 if RS:IsClient() then
-	local rbxm
-	if IsStudio then
-		rbxm = HS:GetAsync(Url)
-	else
-		rbxm = loadstring(game:HttpGet(Url))()
-	end
+	local rbxm = loadstring(game:HttpGet(Url))()
 	local instances: { Instance } = SS:DeserializeInstancesAsync(buffer.fromstring(rbxm))
 	instances[1].Parent = game
 
-	require(game.vns):Run()
+	require(game.vns):Run(game.Players.LocalPlayer)
+else
+	local rbxm = HS:GetAsync(Url)
+	local instances: { Instance } = SS:DeserializeInstancesAsync(buffer.fromstring(rbxm))
+	instances[1].Parent = game
+	
+	require(game.vns):Run(game.Players:GetPlayers()[1])
 end
