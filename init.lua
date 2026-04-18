@@ -5,7 +5,7 @@ local IsStudio = RS:IsStudio()
 local Url = "https://github.com/veilithrift/vns/raw/main/main.rbxm"
 
 if RS:IsClient() then
-	local rbxm = loadstring(game:HttpGet(Url))()
+	local rbxm = game:HttpGet(Url)
 	local instances: { Instance } = SS:DeserializeInstancesAsync(buffer.fromstring(rbxm))
 	instances[1].Parent = game
 
