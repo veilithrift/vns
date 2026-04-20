@@ -30,7 +30,7 @@ local function resolve(path: string, base: Instance)
 	end
 
 	if not current then
-		error("[vns] require invalid path prefix: " .. path)
+		error("[vns][error][require] invalid path prefix:",path)
 	end
 
 	-- walk path
@@ -42,7 +42,7 @@ local function resolve(path: string, base: Instance)
 		end
 
 		if not current then
-			error("[vns] require path resolution failed at: " .. segment)
+			error("[vns][error][require] path resolution failed at:",segment)
 		end
 	end
 
@@ -56,7 +56,7 @@ local function customRequire(module: Instance)
 
 	local chunk, err = loadstring(module.Source, module.Name)
 	if not chunk then
-		error("[vns] require loadstring failed: " .. err)
+		error("[vns][error][require] loadstring failed:",err)
 	end
 
 	local env = {}
