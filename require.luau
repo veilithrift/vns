@@ -1,4 +1,6 @@
-local cache = {}
+_G.vnsmodule = _G.vnsmodule or {}
+
+local cache = _G.vnsmodule
 
 local keyword = {
 	["./"] = function(path, base)
