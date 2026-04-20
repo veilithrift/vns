@@ -25,10 +25,7 @@ local function resolve(path:string, base:Instance)
 	end
 
 	for segment in string.gmatch(path, "[^/]+") do
-		if segment == "." then
-			-- do nothing
-
-		elseif segment == ".." then
+		if segment == ".." then
 			current = current and current.Parent
 
 		else
@@ -36,7 +33,7 @@ local function resolve(path:string, base:Instance)
 		end
 
 		if not current then
-			error("Path resolution failed at segment: " .. segment)
+			error("[vns] require path resolution failed at segment: " .. segment)
 		end
 	end
 
@@ -46,16 +43,16 @@ end
 local function customRequire(path, base)
 	local module = resolve(path, base)
 	if not module then
-		error("[vns] module not found:" .. path)
+		error("[vns] require module not found:" .. path)
 	end
-	
+
 	if cache[module] then
 		return cache[module]
 	end
 
 	local chunk, err = loadstring(module.Source, module.Name)
 	if not chunk then
-		error("[vns] module loadstring failed:", err)
+		error("[vns] require loadstring failed:", err)
 	end
 
 	local result = chunk()
