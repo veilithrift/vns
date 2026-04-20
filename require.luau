@@ -42,7 +42,8 @@ local function resolve(path: string, base: Instance)
 		end
 
 		if not current then
-			error("[vns][error][require] path resolution failed at: "..segment)
+			local message = string.format("[vns][error][require] path resolution failed: (base: %*), (path: %*), (segment: %*)", base:GetFullName(), path, segment)
+			error(message)
 		end
 	end
 
