@@ -59,17 +59,19 @@ local function customRequire(module: Instance)
 		error("[vns][error][require] loadstring failed:",err)
 	end
 
-	local env = {}
+	local env = {
+		game = game,
+		print = print,
+		pairs = pairs,
+		ipairs = ipairs,
+		math = math,
+		string = string,
+		table = table,
+	}
 	env.script = module
-	--[[env.require = function(path)
-		local resolved = resolve(path, module)
-		return customRequire(resolved)
-	end]]
 
-	setmetatable(env, { __index = _G })
-	print(env.script)
-	print(env.game)
-	setfenv(chunk, env)
+	setmetatable(env, {__index = _G})
+	--setfenv(chunk, env)
 
 	local result = chunk()
 
