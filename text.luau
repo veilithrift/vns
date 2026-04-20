@@ -1,3 +1,3 @@
 print("run")
-local a = require("./skibidi.luau)
+local a = require("./skibidi)
 a("skibidi hello")
