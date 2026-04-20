@@ -15,44 +15,46 @@ local keyword = {
 	end,
 }
 
-local function resolve(path:string, base:Instance)
+local function resolve(path: string, base: Instance)
 	local current
+	local remaining = path
 
-	for key, func in keyword do
+	-- apply prefix
+	for key, func in pairs(keyword) do
 		if path:sub(1, #key) == key then
-			path, base = func(path, base)
+			current, remaining = func(path, base) -- ✅ correct order
+			break
 		end
 	end
 
-	for segment in string.gmatch(path, "[^/]+") do
-		if segment == ".." then
-			current = current and current.Parent
+	if not current then
+		error("[vns] invalid path prefix: " .. path)
+	end
 
+	-- walk path
+	for segment in string.gmatch(remaining, "[^/]+") do
+		if segment == ".." then
+			current = current.Parent
 		else
-			current = current and current:FindFirstChild(segment)
+			current = current:FindFirstChild(segment)
 		end
 
 		if not current then
-			error("[vns] require path resolution failed at segment: " .. segment)
+			error("[vns] require path resolution failed at: " .. segment)
 		end
 	end
 
 	return current
 end
 
-local function customRequire(path, base)
-	local module = resolve(path, base)
-	if not module then
-		error("[vns] require module not found:" .. path)
-	end
-
+local function customRequire(module: Instance)
 	if cache[module] then
 		return cache[module]
 	end
 
-	local chunk, err = loadstring(module.Source, module.Name)
+	local chunk, err = loadstring(module.Source, module:GetFullName())
 	if not chunk then
-		error("[vns] require loadstring failed:", err)
+		error("[vns] loadstring failed: " .. err)
 	end
 
 	local result = chunk()
@@ -61,4 +63,7 @@ local function customRequire(path, base)
 	return result
 end
 
-return customRequire
+return function(path, base)
+	local module = resolve(path, base)
+	return customRequire(module)
+end
