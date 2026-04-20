@@ -24,13 +24,13 @@ local function resolve(path: string, base: Instance)
 	-- apply prefix
 	for key, func in pairs(keyword) do
 		if path:sub(1, #key) == key then
-			current, remaining = func(path, base)
+			current, remaining = func(path, base) -- ✅ correct order
 			break
 		end
 	end
 
 	if not current then
-		error("[vns] invalid path prefix: " .. path)
+		error("[vns] require invalid path prefix: " .. path)
 	end
 
 	-- walk path
@@ -54,9 +54,9 @@ local function customRequire(module: Instance)
 		return cache[module]
 	end
 
-	local chunk, err = loadstring(module.Source, module:GetFullName())
+	local chunk, err = loadstring(module.Source, module.Name)
 	if not chunk then
-		error("[vns] loadstring failed: " .. err)
+		error("[vns] require loadstring failed: " .. err)
 	end
 
 	local env = {}
