@@ -24,7 +24,7 @@ local function resolve(path: string, base: Instance)
 	-- apply prefix
 	for key, func in pairs(keyword) do
 		if path:sub(1, #key) == key then
-			current, remaining = func(path, base) -- ✅ correct order
+			current, remaining = func(path, base)
 			break
 		end
 	end
@@ -58,6 +58,12 @@ local function customRequire(module: Instance)
 	if not chunk then
 		error("[vns] loadstring failed: " .. err)
 	end
+
+	local env = {}
+	env.script = module
+
+	setmetatable(env, { __index = _G })
+	setfenv(chunk, env)
 
 	local result = chunk()
 
