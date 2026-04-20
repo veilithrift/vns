@@ -61,9 +61,14 @@ local function customRequire(module: Instance)
 
 	local env = {}
 	env.script = module
-	env.game = game
+	--[[env.require = function(path)
+		local resolved = resolve(path, module)
+		return customRequire(resolved)
+	end]]
 
 	setmetatable(env, { __index = _G })
+	print(env.script)
+	print(env.game)
 	setfenv(chunk, env)
 
 	local result = chunk()
