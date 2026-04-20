@@ -24,7 +24,7 @@ local function resolve(path: string, base: Instance)
 	-- apply prefix
 	for key, func in pairs(keyword) do
 		if path:sub(1, #key) == key then
-			current, remaining = func(path, base) -- ✅ correct order
+			current, remaining = func(path, base)
 			break
 		end
 	end
@@ -63,7 +63,7 @@ local function customRequire(module: Instance)
 	env.script = module
 	env.game = game
 
-	--setmetatable(env, { __index = _G })
+	setmetatable(env, { __index = _G })
 	setfenv(chunk, env)
 
 	local result = chunk()
