@@ -6,16 +6,13 @@ local path = "rbxasset://_vns/vns.rbxm"
 local url = "https://github.com/veilithrift/vns/raw/main/vns.rbxm"
 
 local loadlocal = true
-local _debug = true
 
-local req
+local req = require
 local g = getgenv and getgenv() or _G
 local isinject = RS:IsClient() and not RS:IsStudio()
 
 if isinject then
 	req = loadstring(game:HttpGet("https://raw.githubusercontent.com/veilithrift/vns/refs/heads/main/require.luau"))()
-else
-	req = require
 end
 
 if RS:IsClient() then
