@@ -84,7 +84,7 @@ local function customRequire(module: Instance)
 	env.task = setmetatable({
 		synchronize = function() end,
 		desynchronize = function()
-			if env.yieldcount > 60 then
+			if env.yieldcount > 60*60 then
 				RS.Heartbeat:Wait()
 			end
 			env.yieldcount += 1
@@ -100,7 +100,7 @@ local function customRequire(module: Instance)
 		error("[vns][error][require] require failed: "..result)
 		return
 	end
-	
+
 	local ismodule = module:IsA("ModuleScript")
 
 	if ismodule then
