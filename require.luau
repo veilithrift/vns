@@ -73,13 +73,14 @@ local function customRequire(module: Instance)
 		error("[vns][error][require] loadstring failed: "..err)
 	end
 
-	local env = getfenv(chunk)
+	local env = {}
 	env.script = module
 	env.require = function(path)
 		local resolved = resolve(path, module)
 		return customRequire(resolved)
 	end
 	
+	setmetatable(env, {__index = getfenv(chunk)})
 	setfenv(chunk, env)
 
 	local success, result = pcall(chunk)
