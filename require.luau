@@ -82,7 +82,12 @@ local function customRequire(module: Instance)
 	end
 	env.yieldcount = 0
 	env.task = setmetatable({
-		synchronize = function() end,
+		synchronize = function()
+			if env.yieldcount > 60*30 then
+				RS.Heartbeat:Wait()
+			end
+			env.yieldcount += 1
+		end,
 		desynchronize = function()
 			if env.yieldcount > 60*30 then
 				RS.Heartbeat:Wait()
