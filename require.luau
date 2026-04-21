@@ -1,6 +1,7 @@
 local g = getgenv and getgenv() or _G
 g.requiremodule = g.requiremodule or {}
 
+local RS = game:GetService("RunService")
 local cache = g.requiremodule
 
 local prefix = {
@@ -79,7 +80,13 @@ local function customRequire(module: Instance)
 		local resolved = resolve(path, module)
 		return customRequire(resolved)
 	end
-	
+	env.task = setmetatable({
+		synchronize = function() end,
+		desynchronize = function()
+			RS.Heartbeat:Wait()
+		end,
+	}, {__index = task})
+
 	setmetatable(env, {__index = getfenv(chunk)})
 	setfenv(chunk, env)
 
@@ -89,8 +96,12 @@ local function customRequire(module: Instance)
 		error("[vns][error][require] require failed: "..result)
 		return
 	end
+	
+	local ismodule = module:IsA("ModuleScript")
 
-	cache[module] = result
+	if ismodule then
+		cache[module] = result
+	end
 	return result
 end
 
