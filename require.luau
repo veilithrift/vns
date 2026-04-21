@@ -77,7 +77,7 @@ local function customRequire(module: Instance)
 	local env = {}
 	
 	local function yielding()
-		if env.yieldcount > 60*120 then
+		if env.yieldcount > 60*240 then
 			RS.Heartbeat:Wait()
 			env.yieldcount = 0
 		end
