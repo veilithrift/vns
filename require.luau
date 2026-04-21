@@ -75,6 +75,14 @@ local function customRequire(module: Instance)
 	end
 
 	local env = {}
+	
+	local function yielding()
+		if env.yieldcount > 60*120 then
+			RS.Heartbeat:Wait()
+		end
+		env.yieldcount += 1
+	end
+	
 	env.script = module
 	env.require = function(path)
 		local resolved = resolve(path, module)
@@ -82,18 +90,8 @@ local function customRequire(module: Instance)
 	end
 	env.yieldcount = 0
 	env.task = setmetatable({
-		synchronize = function()
-			if env.yieldcount > 60*30 then
-				RS.Heartbeat:Wait()
-			end
-			env.yieldcount += 1
-		end,
-		desynchronize = function()
-			if env.yieldcount > 60*30 then
-				RS.Heartbeat:Wait()
-			end
-			env.yieldcount += 1
-		end,
+		synchronize = yielding,
+		desynchronize = yielding,
 	}, {__index = task})
 
 	setmetatable(env, {__index = getfenv(chunk)})
