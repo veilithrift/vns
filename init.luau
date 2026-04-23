@@ -24,5 +24,5 @@ if RS:IsClient() then
 		return
 	end
 
-	r:Run(true)
+	r:Run(isinject)
 end
