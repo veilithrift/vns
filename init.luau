@@ -8,7 +8,6 @@ local url = "https://github.com/veilithrift/vns/raw/main/vns.rbxm"
 local loadlocal = true
 
 local req = require
-local g = getgenv and getgenv() or _G
 local isinject = RS:IsClient() and not RS:IsStudio()
 
 if isinject then
@@ -17,8 +16,6 @@ end
 
 if RS:IsClient() then
 	local rbxm: ModuleScript = loadlocal and game:GetObjects(path)[1] or SS:DeserializeInstancesAsync(buffer.fromstring(game:HttpGet(url)))[1]
-	g.vns = rbxm
-	g.inject = isinject
 	rbxm.Parent = CG
 
 	local r = req(rbxm)
