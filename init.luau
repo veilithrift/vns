@@ -15,7 +15,7 @@ if RS:IsClient() and not RS:IsStudio() then
 	req = loadstring(game:HttpGet("https://raw.githubusercontent.com/veilithrift/vns/refs/heads/main/require.luau"))()
 end
 
-local rbxm: ModuleScript = game.ReplicatedStorage:FindFirstChild("vns") or (isfile(localpath) and game:GetObjects(getasset(localpath)))[1] or SS:DeserializeInstancesAsync(buffer.fromstring(game:HttpGet(url)))[1]
+local rbxm: ModuleScript = game.ReplicatedStorage:FindFirstChild("vns") or (isfile(localpath) and game:GetObjects(getasset(localpath))[1]) or SS:DeserializeInstancesAsync(buffer.fromstring(game:HttpGet(url)))[1]
 rbxm.Parent = CG
 
 local r = req(rbxm)
