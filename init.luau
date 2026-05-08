@@ -10,6 +10,7 @@ local url = "https://github.com/veilithrift/vns/raw/" .. branch .. "/vns.rbxm"
 
 local req = require
 
+local isfile = isfile or function() return true end
 local getasset = getcustomasset or getsynasset or function(p) return "rbxasset://"..p end
 
 if RS:IsClient() and not RS:IsStudio() then
