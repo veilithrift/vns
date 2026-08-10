@@ -1,5 +1,5 @@
 local g = getgenv and getgenv() or _G
-g.requiremodule = g.requiremodule or {}
+g.requiremodule = g.requiremodule or setmetatable({}, { __mode = "k" })
 
 local RS = game:GetService("RunService")
 local cache = g.requiremodule
