@@ -8,7 +8,6 @@ local localpath = "_vns/vns.rbxm"
 local branch = "main"
 local url = "https://github.com/veilithrift/vns/raw/" .. branch .. "/vns.rbxm"
 
-local g = getgenv and getgenv() or _G
 local req = require
 
 local gethiddenui = gethui or get_hidden_gui or function() return CG end
@@ -28,7 +27,5 @@ if not r then
 	error("[vns][error][init] loadstring failed")
 	return
 end
-
-g.inject = true
 
 r:Run(branch)
