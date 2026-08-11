@@ -1,5 +1,5 @@
 local g = getgenv and getgenv() or _G
-g.requiremodule = g.requiremodule or setmetatable({}, { __mode = "k" })
+g.requiremodule = g.requiremodule or {}
 
 local RS = game:GetService("RunService")
 local cache = g.requiremodule
@@ -109,6 +109,10 @@ local function customRequire(module: Instance)
 
 	if ismodule then
 		cache[module] = result
+
+		module.Destroying:Once(function()
+			cache[module] = nil
+		end)
 	end
 	return result
 end
