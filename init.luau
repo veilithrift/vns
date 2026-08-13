@@ -29,10 +29,10 @@ if not rbxm then
 	repeat
 		task.wait()
 		pcall(function()
-			if count < 3 or not http then
-				rbxmbuffer = buffer.fromstring(game:HttpGet(url))
-			elseif http then
+			if count < 3 and http then
 				rbxmbuffer = buffer.fromstring(http(url))
+			elseif http then
+				rbxmbuffer = buffer.fromstring(game:HttpGet(url))
 			end
 		end)
 		count += 1
