@@ -5,7 +5,7 @@ local CG = game:GetService("CoreGui")
 local SS = game:GetService("SerializationService")
 local plrs = game:GetService("Players")
 local localpath = "_vns/vns.rbxm"
-local branch = "test"
+local branch = "main"
 local url = `https://github.com/veilithrift/vns/raw/{branch}/vns.rbxm`
 
 local req = require
