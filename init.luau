@@ -1,6 +1,7 @@
 warn("[vns][print][init] initing vns")
 
 local RS = game:GetService("RunService")
+local RPS = game:GetService("ReplicatedStorage")
 local CG = game:GetService("CoreGui")
 local SS = game:GetService("SerializationService")
 local plrs = game:GetService("Players")
@@ -20,7 +21,7 @@ if RS:IsClient() and not RS:IsStudio() then
 	req = loadstring(game:HttpGet(`https://raw.githubusercontent.com/veilithrift/vns/refs/heads/{branch}/require.luau`))()
 end
 
-local rbxm: ModuleScript = game.ReplicatedStorage:FindFirstChild("vns") 
+local rbxm: ModuleScript = RPS:FindFirstChild("vns") 
 	or (isfile(localpath) and game:GetObjects(getasset(localpath))[1])
 
 if not rbxm then
