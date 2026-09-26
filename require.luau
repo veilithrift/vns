@@ -101,7 +101,7 @@ local function customRequire(module: Instance)
 	local success, result = pcall(chunk)
 
 	if not success then
-		error("[vns][error][require] require failed:", module:GetFullName(), result)
+		error(`[vns][error][require] require failed:  {module:GetFullName()}, {result}`)
 		return
 	end
 
