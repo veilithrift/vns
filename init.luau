@@ -28,7 +28,7 @@ if not rbxm then
 	local rbxmbuffer
 	local count = 0
 	repeat
-		task.wait()
+		RS.PostSimulation:Wait()
 		pcall(function()
 			if count < 3 or not http then
 				rbxmbuffer = buffer.fromstring(game:HttpGet(url))
